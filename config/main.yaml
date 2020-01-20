@@ -1,0 +1,3 @@
+application:
+  url: http://www.baidu.com/
+  xpath: //html/body/div[1]/div[4]/div/div/p[2]
