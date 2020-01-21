@@ -4,11 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "node-jquery": "^0.1.0",
-    "cheerio": "^1.0.0-rc.3",
+    "jquery": "^3.4.1",
+    "jsdom": "^16.0.1",
     "request": "^2.88.0",
-    "xmldom": "^0.2.1",
-    "xpath": "0.0.27",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {},
