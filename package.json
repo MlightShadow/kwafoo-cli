@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "node-jquery": "^0.1.0",
     "request": "^2.88.0",
     "xmldom": "^0.2.1",
     "xpath": "0.0.27",
