@@ -1,5 +1,5 @@
 module.exports = {
-    get: function (url) {
+    async: function (url) {
         var request = require('request')
         return new Promise(function (resolve, reject) {
             request.get({
@@ -12,5 +12,8 @@ module.exports = {
                 }
             })
         })
+    },
+    sync: function (url) {
+        // todo
     }
 }
