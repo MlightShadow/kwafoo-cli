@@ -1,46 +1,35 @@
-// looter.loot('下载地址', '本地存储路径', '文件名');
+const request = require('request')
+const fs = require('fs')
+var promise_num = 0
+
 module.exports = {
-    loot: function (imgSrc, dirName, fileName) {
-        const path = require('path')
-
-        const http = require('http')
-        const fs = require('fs')
-
-        console.log('start downloading ' + imgSrc)
-        let req = http.request(imgSrc, function (res) {
-            console.log('request: ' + imgSrc + ' return status: ' + res.statusCode)
-            let contentLength = parseInt(res.headers['content-length'])
-
-            let downLength = 0
-
-            let out = fs.createWriteStream(dirName + '/' + fileName)
-            res.on('data', function (chunk) {
-                downLength += chunk.length
-                let progress = Math.floor(downLength * 100 / contentLength)
-                let str = '下载：' + progress + '%'
-                console.log(str)
-
-                // 写文件
-                out.write(chunk, function () {
-                    // console.log(chunk.length);
-
-                })
+    loot: function (url, path) {
+        const filename = url.slice(url.lastIndexOf('/') + 1)
+        new Promise(function (resolve) {
+            promise_num++
+            console.log(`promise remain: ${promise_num} will be working`)
+            var writeStream = fs.createWriteStream(path + filename);
+            var readStream = request(url, {
+                timeout: 20000
             })
-            res.on('end', function () {
-                downFlag = false
-                console.log('end downloading ' + imgSrc)
-                if (isNaN(contentLength)) {
-                    console.log(imgSrc + ' content length error')
-                    return
-                }
-                if (downLength < contentLength) {
-                    console.log(imgSrc + ' download error, try again')
-                }
+            readStream.pipe(writeStream);
+            readStream.on('error', function (err) {
+                promise_num--
+                console.log(`restart line: ${url}\nBY ERROR: ${err}\n--------`)
+                doLoot(url)
             })
-        })
-        req.on('error', function (e) {
-            console.log('request ' + imgSrc + ' error, try again')
-        })
-        req.end()
+            writeStream.on("finish", function () {
+                writeStream.end();
+                resolve(url)
+            });
+        }).then(
+            line => {
+                console.log(`COMPLETE DONE!: ${line}`)
+                promise_num--
+                if (promise_num == 0) {
+                    console.log(`--------ALL DOWNLOAD COMPLETE SUCCESSFUL--------`)
+                }
+            }
+        )
     }
 }
