@@ -1,3 +1,31 @@
 application:
+  # 从url配置页面开始
+  # task将在每个转到的页面上循环操作
   url: https://www.baidu.com/
-  selector: 'a.mnav:nth-child(5)'
+  task:
+        # 文件只通过selector获取节点抓取
+    text: 
+      target:
+        selector: 'a.mnav:nth-child(5)'
+        save: ./{path}/{time}/
+      target:
+        selector: 'a.mnav:nth-child(5)'
+        save: ./{path}/{time}/
+    
+        # 当selector grep 同时配置时 则对selector中的文本进系grep匹配
+    file:
+      target:
+        selector: 'a.mnav:nth-child(5)'
+        grep: /\d+/g
+        save: ./{path}/{time}/
+      target:
+        selector: 'a.mnav:nth-child(5)'
+        grep: /\d+/g
+        save: ./{path}/{time}/
+
+        # href 只固定做转到操作
+    href:
+      target:
+        selector: 'a.mnav:nth-child(5)'
+        grep: /\d+/g
+
