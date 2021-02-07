@@ -1,6 +1,7 @@
 application:
   # 从url配置页面开始
   # task将在每个转到的页面上循环操作
+  # 直到达到end条件
   url: https://www.baidu.com/
   task:
         # 文件只通过selector获取节点抓取
@@ -28,4 +29,10 @@ application:
       target:
         selector: 'a.mnav:nth-child(5)'
         grep: /\d+/g
+  end: 
+    count: 10
+    grep: /\d+/g
+    url: http://xx.com/ss.html
 
+
+    
